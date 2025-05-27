@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('n_d_c_s', function (Blueprint $table) {
             $table->id();
+            $table->string('ndc_code')->unique();
+            $table->string('brand_name')->nullable();
+            $table->string('generic_name')->nullable();
+            $table->string('labeler_name')->nullable();
+            $table->string('product_type')->nullable();
             $table->timestamps();
         });
     }
