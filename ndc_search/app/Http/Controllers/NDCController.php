@@ -10,11 +10,18 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class NDCController extends Controller{
+
+    // Displays the main search page
     public function index()
     {
         return view('search');
     }
 
+
+    // Handles the search logic for NDC codes
+    // Processes NDC codes by checking the local database and fetching missing ones from the OpenFDA API.
+    // Combines all results (local, API, or not found), stores them in the session, and paginates for display.
+    // Passes the final paginated results to the view for rendering.
     public function search(Request $request)
     {
         $codes = array_map('trim', explode(',', $request->ndc_codes));
@@ -77,6 +84,10 @@ class NDCController extends Controller{
         return view('search', ['results' => $paginatedResults]);
     }
 
+    // Exports the last search results to a CSV file
+    // Checks if there are results stored in the session
+    // If so, exports them using Laravel Excel
+    // If not, redirects back with an error message
     public function export()
     {
         $data = session('last_results');
@@ -89,6 +100,10 @@ class NDCController extends Controller{
     }
 
 
+
+    // Deletes a specific NDC record from the database
+    // Finds the record by ID and deletes it
+    // Redirects back with a success message
     public function delete($id)
     {
         $ndc = NDC::findOrFail($id);

@@ -15,6 +15,9 @@ class NDCExport implements FromCollection, WithHeadings
         $this->data = $data;
     }
 
+
+    // This class handles exporting NDC data to a CSV or Excel file.
+    // It formats the provided data with custom headings and fills missing values with placeholders.
     public function collection()
     {
         return collect($this->data)->map(function ($item) {
@@ -29,6 +32,7 @@ class NDCExport implements FromCollection, WithHeadings
         });
     }
 
+    // The export includes fields like NDC code, brand, generic name, labeler, product type, and data source.
     public function headings(): array
     {
         return [
